@@ -10,10 +10,12 @@ import BookService from "./pages/BookService";
 import MyBookings from "./pages/MyBookings";
 import Technician from "./pages/Technician";
 import AdminBookings from "./pages/AdminBookings";
+import Navbar from "./components/Navbar";
 
 function App() {
     return (
         <BrowserRouter>
+        <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

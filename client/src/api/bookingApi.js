@@ -9,7 +9,15 @@ export const createBooking = async (
 
   const response = await axios.post(
     `${API}/create`,
-    bookingData
+    bookingData,
+
+    {
+      headers: {
+        Authorization:
+          `Bearer ${localStorage.getItem("token")}`,
+      },
+    }
+
   );
 
   return response.data;

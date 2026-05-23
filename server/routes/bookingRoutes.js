@@ -7,10 +7,14 @@ const {
   getBookings,
 } = require("../controllers/bookingController");
 
+const {
+  protect,
+} = require("../middleware/authMiddleware");
 
 // CREATE BOOKING
 router.post(
   "/create",
+  protect,
   createBooking
 );
 

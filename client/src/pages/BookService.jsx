@@ -72,11 +72,12 @@ function BookService() {
         />
 
         <input
-          type="date"
-          name="date"
-          onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
-        />
+  type="date"
+  name="date"
+  value={formData.date}
+  onChange={handleChange}
+  className="w-full p-4 rounded bg-[#111827] text-white outline-none"
+/>
 
         <button className="w-full bg-blue-600 p-3 rounded text-white">
           Confirm Booking

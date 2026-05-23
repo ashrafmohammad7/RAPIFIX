@@ -64,9 +64,11 @@ function MyBookings() {
             </p>
 
             <p>
-              Date:
-              {" "}
-              {booking.date}
+              Date: {
+  new Date(
+    booking.date
+  ).toLocaleDateString()
+}
             </p>
 
             <p className="mt-4 text-green-400">
