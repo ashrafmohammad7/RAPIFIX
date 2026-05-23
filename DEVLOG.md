@@ -14,3 +14,10 @@
 - Connected frontend with backend
 - Added booking APIs
 - Stored data in MongoDB
+
+## Day 3
+- Added protected routes
+- Implemented JWT middleware
+- Created dynamic navbar
+- Added logout system
+- Improved booking authentication flow
