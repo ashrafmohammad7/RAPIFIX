@@ -1,10 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  getMyBookings,
+} from "../api/bookingApi";
 
 function MyBookings() {
 
   const [bookings, setBookings] =
     useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
 
   useEffect(() => {
 
@@ -12,78 +21,180 @@ function MyBookings() {
 
   }, []);
 
-  const fetchBookings = async () => {
+  const fetchBookings =
+    async () => {
 
-    try {
+      try {
 
-      const response =
-        await axios.get(
-          "http://localhost:5000/api/bookings"
-        );
+        const data =
+          await getMyBookings();
 
-      setBookings(response.data);
+        setBookings(data);
 
-    } catch (error) {
+      } catch (error) {
 
-      console.log(error);
+        console.log(error);
 
-    }
+      } finally {
+
+        setLoading(false);
+
+      }
 
   };
 
+  if (loading) {
+
+    return (
+
+      <div className="bg-black min-h-screen flex justify-center items-center text-white text-2xl">
+
+        Loading...
+
+      </div>
+
+    );
+
+  }
+
   return (
+
     <div className="bg-black min-h-screen text-white p-10">
 
       <h1 className="text-5xl font-bold text-blue-500 mb-10">
         My Bookings 📋
       </h1>
 
+      {/* EMPTY BOOKINGS */}
+
+      {bookings.length === 0 && (
+
+        <p className="text-gray-400 text-xl">
+          No bookings yet 🚀
+        </p>
+
+      )}
+
       <div className="grid md:grid-cols-3 gap-6">
 
-        {bookings.map((booking) => (
+        {bookings
 
-          <div
-            key={booking._id}
-            className="bg-gray-900 p-6 rounded-xl"
-          >
+          .sort(
+            (a, b) =>
+              new Date(b.date) -
+              new Date(a.date)
+          )
 
-            <h2 className="text-2xl mb-4">
-              {booking.service}
-            </h2>
+          .map((booking) => {
 
-            <p>
-              Address:
-              {" "}
-              {booking.address}
-            </p>
+          const bookingDate =
+            new Date(booking.date);
 
-            <p>
-              City:
-              {" "}
-              {booking.city}
-            </p>
+          const today =
+            new Date();
 
-            <p>
-              Date: {
-  new Date(
-    booking.date
-  ).toLocaleDateString()
-}
-            </p>
+          today.setHours(
+            0,
+            0,
+            0,
+            0
+          );
 
-            <p className="mt-4 text-green-400">
-              Status:
-              {" "}
-              {booking.status}
-            </p>
+          bookingDate.setHours(
+            0,
+            0,
+            0,
+            0
+          );
 
-          </div>
+          const isExpired =
+            bookingDate < today;
 
-        ))}
+          return (
+
+            <div
+              key={booking._id}
+              className="bg-gray-900 p-6 rounded-xl hover:scale-105 transition"
+            >
+
+              <h2 className="text-2xl mb-4">
+                {booking.service}
+              </h2>
+
+              <p>
+                Address:
+                {" "}
+                {booking.address}
+              </p>
+
+              <p>
+                City:
+                {" "}
+                {booking.city}
+              </p>
+
+              <p>
+                Date:
+                {" "}
+                {
+                  new Date(
+                    booking.date
+                  ).toLocaleDateString()
+                }
+              </p>
+
+              <p
+                className={`mt-4 font-semibold ${
+                  isExpired &&
+                  booking.status !==
+                    "Completed"
+
+                    ? "text-red-500"
+
+                    : booking.status ===
+                      "Pending"
+
+                    ? "text-yellow-400"
+
+                    : booking.status ===
+                      "Accepted"
+
+                    ? "text-blue-400"
+
+                    : booking.status ===
+                      "Completed"
+
+                    ? "text-green-400"
+
+                    : "text-gray-400"
+                }`}
+              >
+
+                Status:
+                {" "}
+
+                {
+                  isExpired &&
+                  booking.status !==
+                    "Completed"
+
+                    ? "Expired"
+
+                    : booking.status
+                }
+
+              </p>
+
+            </div>
+
+          );
+
+        })}
 
       </div>
 
     </div>
+
   );
 }
 

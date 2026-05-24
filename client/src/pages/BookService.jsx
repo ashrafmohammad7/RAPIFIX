@@ -1,54 +1,74 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { createBooking } from "../api/bookingApi";
 
 function BookService() {
 
-  const { serviceName } = useParams();
+  const { serviceName } =
+    useParams();
 
-  const [formData, setFormData] = useState({
-    address: "",
-    city: "",
-    date: "",
-  });
+  const navigate =
+    useNavigate();
+
+  const [formData, setFormData] =
+    useState({
+      address: "",
+      city: "",
+      date: "",
+    });
 
   const handleChange = (e) => {
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
 
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =
+    async (e) => {
 
-  e.preventDefault();
+      e.preventDefault();
 
-  try {
+      try {
 
-    const data =
-      await createBooking({
-        service: serviceName,
-        ...formData,
-      });
+        const data =
+          await createBooking({
 
-    alert(data.message);
+            service:
+              serviceName,
 
-  } catch (error) {
+            ...formData,
 
-    alert("Booking Failed");
+          });
 
-  }
+        alert(data.message);
 
-};
+        navigate(
+          "/my-bookings"
+        );
+
+      } catch (error) {
+
+        alert(
+          "Booking Failed"
+        );
+
+      }
+
+  };
 
   return (
+
     <div className="bg-black min-h-screen flex justify-center items-center">
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-10 rounded-xl w-[450px]"
+        className="bg-gray-900 p-10 rounded-xl w-[450px] hover:scale-105 transition"
       >
 
         <h1 className="text-3xl text-white font-bold mb-6">
@@ -59,33 +79,47 @@ function BookService() {
           type="text"
           name="address"
           placeholder="Address"
+          value={formData.address}
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
           type="text"
           name="city"
           placeholder="City"
+          value={formData.city}
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
-  type="date"
-  name="date"
-  value={formData.date}
-  onChange={handleChange}
-  className="w-full p-4 rounded bg-[#111827] text-white outline-none"
-/>
+          type="date"
+          name="date"
+          value={formData.date}
+          onChange={handleChange}
+          min={
+            new Date()
+              .toISOString()
+              .split("T")[0]
+          }
+          required
+          className="w-full mb-6 p-4 rounded bg-[#111827] text-white outline-none"
+        />
 
-        <button className="w-full bg-blue-600 p-3 rounded text-white">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 transition p-3 rounded text-white font-semibold"
+        >
           Confirm Booking
         </button>
 
       </form>
 
     </div>
+
   );
 }
 

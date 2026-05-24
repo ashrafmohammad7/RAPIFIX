@@ -1,15 +1,29 @@
-const express = require("express");
+const express =
+  require("express");
 
-const router = express.Router();
+const router =
+  express.Router();
 
 const {
+
   createBooking,
+
   getBookings,
-} = require("../controllers/bookingController");
+
+  getAllBookings,
+
+  updateBookingStatus,
+
+} = require(
+  "../controllers/bookingController"
+);
 
 const {
   protect,
-} = require("../middleware/authMiddleware");
+} = require(
+  "../middleware/authMiddleware"
+);
+
 
 // CREATE BOOKING
 router.post(
@@ -19,11 +33,25 @@ router.post(
 );
 
 
-// GET BOOKINGS
+// USER BOOKINGS
 router.get(
-  "/",
+  "/my-bookings",
+  protect,
   getBookings
 );
 
+
+// ADMIN BOOKINGS
+router.get(
+  "/admin",
+  getAllBookings
+);
+
+
+// UPDATE STATUS
+router.put(
+  "/update/:id",
+  updateBookingStatus
+);
 
 module.exports = router;

@@ -3,22 +3,48 @@ import axios from "axios";
 const API =
   "http://localhost:5000/api/bookings";
 
-export const createBooking = async (
-  bookingData
-) => {
 
-  const response = await axios.post(
-    `${API}/create`,
-    bookingData,
+// CREATE BOOKING
+export const createBooking =
+  async (bookingData) => {
 
-    {
-      headers: {
-        Authorization:
-          `Bearer ${localStorage.getItem("token")}`,
-      },
-    }
+    const response =
+      await axios.post(
 
-  );
+        `${API}/create`,
 
-  return response.data;
+        bookingData,
+
+        {
+          headers: {
+            Authorization:
+              `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+
+      );
+
+    return response.data;
+};
+
+
+// GET USER BOOKINGS
+export const getMyBookings =
+  async () => {
+
+    const response =
+      await axios.get(
+
+        `${API}/my-bookings`,
+
+        {
+          headers: {
+            Authorization:
+              `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+
+      );
+
+    return response.data;
 };
