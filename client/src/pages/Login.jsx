@@ -1,66 +1,91 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
-import { loginUser } from "../api/authApi";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import toast from "react-hot-toast";
+
+import {
+  loginUser,
+} from "../api/authApi";
 
 function Login() {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] =
+    useState({
+      email: "",
+      password: "",
+    });
 
   const handleChange = (e) => {
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
 
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =
+    async (e) => {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    try {
+      try {
 
-      const data = await loginUser(formData);
+        const data =
+          await loginUser(formData);
 
-      // SAVE TOKEN
-      localStorage.setItem("token", data.token);
+        localStorage.setItem(
+          "token",
+          data.token
+        );
 
-      // SAVE USER
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
+        localStorage.setItem(
 
-      alert(data.message);
+          "user",
 
-      navigate(-1);
+          JSON.stringify(
+            data.user
+          )
 
-    } catch (error) {
+        );
 
-      console.log(error);
+        toast.success(
+          data.message
+        );
 
-      alert(
-        error.response?.data?.message ||
-        "Login failed"
-      );
+        navigate(-1);
 
-    }
+      } catch (error) {
+
+        console.log(error);
+
+        toast.error(
+
+          error.response?.data?.message ||
+
+          "Login Failed"
+
+        );
+
+      }
 
   };
 
   return (
+
     <div className="bg-black min-h-screen flex justify-center items-center">
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-10 rounded-xl w-[400px]"
+        className="bg-gray-900 p-10 rounded-xl w-[400px] hover:scale-105 transition"
       >
 
         <h1 className="text-3xl font-bold text-white mb-6 text-center">
@@ -72,7 +97,8 @@ function Login() {
           name="email"
           placeholder="Email"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
@@ -80,10 +106,13 @@ function Login() {
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
-        <button className="w-full bg-blue-600 p-3 rounded text-white hover:bg-blue-700">
+        <button
+          className="w-full bg-blue-600 p-3 rounded text-white hover:bg-blue-700 transition"
+        >
           Login
         </button>
 
@@ -103,6 +132,7 @@ function Login() {
       </form>
 
     </div>
+
   );
 }
 

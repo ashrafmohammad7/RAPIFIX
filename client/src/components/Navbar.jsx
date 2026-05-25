@@ -1,77 +1,114 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
 
 function Navbar() {
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem(
+      "token"
+    );
 
-  const handleLogout = () => {
+  const user =
+    JSON.parse(
+      localStorage.getItem(
+        "user"
+      )
+    );
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const logout = () => {
+
+    localStorage.removeItem(
+      "token"
+    );
+
+    localStorage.removeItem(
+      "user"
+    );
 
     navigate("/login");
+
   };
 
-  // CHECK LOGIN/SIGNUP PAGE
-  const isAuthPage =
-    location.pathname === "/login" ||
-    location.pathname === "/signup";
+  const navLinkClass =
+    ({ isActive }) =>
+
+      isActive
+
+        ? "text-blue-500 font-semibold"
+
+        : "text-white hover:text-blue-400 transition";
 
   return (
 
-    <nav className="bg-[#081229] text-white flex justify-between items-center px-5 py-5">
+    <nav className="bg-[#081028] px-6 py-5 flex justify-between items-center">
 
-      <Link
-        to="/"
-        className="text-4xl font-bold text-blue-500"
-      >
+      <h1 className="text-3xl font-bold text-blue-500">
         RAPIFIX 🚀
-      </Link>
+      </h1>
 
-      {/* HIDE NAV LINKS ON LOGIN/SIGNUP */}
-      {!isAuthPage && (
+      <div className="flex gap-8 items-center text-lg">
 
-        <div className="flex gap-8 text-2xl">
+        <NavLink
+          to="/dashboard"
+          className={navLinkClass}
+        >
+          Dashboard
+        </NavLink>
 
-          <Link to="/">Home</Link>
+        <NavLink
+          to="/my-bookings"
+          className={navLinkClass}
+        >
+          My Bookings
+        </NavLink>
 
-          <Link to="/services">
-            Services
-          </Link>
+        {user?.role === "admin" && (
 
-          {token && (
-            <>
-              <Link to="/dashboard">
-                Dashboard
-              </Link>
+          <NavLink
+            to="/admin-bookings"
+            className={navLinkClass}
+          >
+            Admin
+          </NavLink>
 
-              <Link to="/my-bookings">
-                My Bookings
-              </Link>
+        )}
 
-              <button
-                onClick={handleLogout}
-                className="text-red-500"
-              >
-                Logout
-              </button>
-            </>
-          )}
+        <NavLink
+          to="/profile"
+          className={navLinkClass}
+        >
+          Profile
+        </NavLink>
 
-          {!token && (
-            <Link to="/login">
-              Login
-            </Link>
-          )}
+        {!token ? (
 
-        </div>
+          <NavLink
+            to="/login"
+            className="bg-blue-600 px-5 py-2 rounded hover:bg-blue-700 transition text-white"
+          >
+            Login
+          </NavLink>
 
-      )}
+        ) : (
+
+          <button
+            onClick={logout}
+            className="bg-red-600 px-5 py-2 rounded hover:bg-red-700 transition text-white"
+          >
+            Logout
+          </button>
+
+        )}
+
+      </div>
 
     </nav>
+
   );
 }
 

@@ -10,6 +10,12 @@ function AdminBookings() {
   const [bookings, setBookings] =
     useState([]);
 
+  const [search, setSearch] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(true);
+
   useEffect(() => {
 
     fetchBookings();
@@ -19,12 +25,24 @@ function AdminBookings() {
   const fetchBookings =
     async () => {
 
-      const response =
-        await axios.get(
-          "http://localhost:5000/api/bookings/admin"
-        );
+      try {
 
-      setBookings(response.data);
+        const response =
+          await axios.get(
+            "http://localhost:5000/api/bookings/admin"
+          );
+
+        setBookings(response.data);
+
+      } catch (error) {
+
+        console.log(error);
+
+      } finally {
+
+        setLoading(false);
+
+      }
 
   };
 
@@ -43,6 +61,20 @@ function AdminBookings() {
 
   };
 
+  if (loading) {
+
+    return (
+
+      <div className="bg-black min-h-screen flex justify-center items-center text-white text-2xl">
+
+        Loading...
+
+      </div>
+
+    );
+
+  }
+
   return (
 
     <div className="bg-black min-h-screen p-10 text-white">
@@ -51,19 +83,47 @@ function AdminBookings() {
         Admin Bookings 📋
       </h1>
 
-      {/* EMPTY BOOKINGS MESSAGE */}
+      {/* SEARCH */}
+
+      <input
+        type="text"
+        placeholder="Search Service..."
+        value={search}
+        onChange={(e) =>
+          setSearch(e.target.value)
+        }
+        className="mb-8 p-3 rounded bg-gray-900 text-white outline-none"
+      />
+
+      {/* EMPTY BOOKINGS */}
 
       {bookings.length === 0 && (
 
         <p className="text-gray-400 text-xl">
-          No bookings found
+          No bookings found 📭
         </p>
 
       )}
 
       <div className="grid md:grid-cols-3 gap-6">
 
-        {bookings.map((booking) => {
+        {bookings
+
+          .filter((booking) =>
+            booking.service
+              .toLowerCase()
+              .includes(
+                search.toLowerCase()
+              )
+          )
+
+          .sort(
+            (a, b) =>
+              new Date(b.date) -
+              new Date(a.date)
+          )
+
+          .map((booking) => {
 
           const bookingDate =
             new Date(booking.date);
@@ -111,7 +171,14 @@ function AdminBookings() {
                 {
                   new Date(
                     booking.date
-                  ).toLocaleDateString()
+                  ).toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    }
+                  )
                 }
               </p>
 
@@ -181,12 +248,25 @@ function AdminBookings() {
                     "Completed" && (
 
                   <button
-                    onClick={() =>
-                      updateStatus(
-                        booking._id,
-                        "Completed"
-                      )
-                    }
+                    onClick={() => {
+
+                      const confirmComplete =
+                        window.confirm(
+                          "Mark booking as completed?"
+                        );
+
+                      if (
+                        confirmComplete
+                      ) {
+
+                        updateStatus(
+                          booking._id,
+                          "Completed"
+                        );
+
+                      }
+
+                    }}
                     className="bg-green-600 hover:bg-green-700 transition px-4 py-2 rounded"
                   >
                     Complete

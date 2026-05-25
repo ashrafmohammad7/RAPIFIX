@@ -1,73 +1,48 @@
 # DEVLOG 🚀
 
 ## Day 1
-- Initialized MERN stack
+- Initialized MERN stack project
 - Connected MongoDB Atlas
-- Built authentication system
-- Created signup and login APIs
-- Added JWT authentication
-- Configured Express backend
-- Setup React frontend with Tailwind CSS
+- Built Signup/Login APIs
+- Added JWT Authentication
+- Created frontend auth pages
 
 ---
 
 ## Day 2
-- Built booking system
-- Added technician registration
-- Created admin dashboard
-- Connected frontend with backend
+- Built appliance booking system
 - Added booking APIs
-- Stored data in MongoDB
+- Connected frontend with backend
+- Stored booking data in MongoDB
 - Created My Bookings page
-- Added service booking workflow
 
 ---
 
 ## Day 3
-- Added protected routes
+- Added Protected Routes
 - Implemented JWT middleware
-- Created dynamic navbar
-- Added logout system
-- Improved booking authentication flow
-- Added user dashboard
-- Protected booking APIs
-- Added token-based authorization
+- Created dynamic Navbar
+- Added Logout functionality
+- Improved authentication flow
 
 ---
 
 ## Day 4
-- Created Admin Bookings management system
-- Added booking status updates
-- Implemented Accept/Complete workflow
-- Added expired booking detection
-- Added conditional admin actions
-- Improved status color system
-- Added hover card animations
-- Added loading states
+- Built Admin Dashboard
+- Added Accept/Complete booking system
+- Added Expired booking logic
+- Improved booking status colors
 - Added redirect after booking
-- Disabled past date selection
-- Improved UI/UX polish
+- Added empty booking states
 
 ---
 
-# Current MVP Status
-
-✅ Authentication System  
-✅ Booking Management  
-✅ Admin Dashboard  
-✅ Protected Routes  
-✅ Booking Status Workflow  
-✅ Responsive UI  
-✅ Startup-style MERN Architecture  
-
----
-
-# Upcoming Features
-
-- Payment Gateway
-- Notifications
-- Technician Assignment
-- Ratings & Reviews
-- Deployment
-- Live Tracking
-- Analytics Dashboard
+## Day 5
+- Added Profile page
+- Added Footer component
+- Added active navbar links
+- Added hover animations
+- Added booking search feature
+- Improved UI polish
+- Added role-based Admin visibility
+- Improved responsive layout

@@ -1,4 +1,4 @@
-function Dashboard() {
+function Profile() {
 
   const user =
     JSON.parse(
@@ -12,18 +12,16 @@ function Dashboard() {
     <div className="bg-black min-h-screen text-white p-10">
 
       <h1 className="text-5xl font-bold text-blue-500 mb-10">
-        RAPIFIX Dashboard 🚀
+        My Profile 👤
       </h1>
 
       <div className="bg-gray-900 p-8 rounded-xl w-[450px] hover:scale-105 transition duration-300">
 
         <h2 className="text-3xl mb-6">
-
-          Welcome {user?.name}
-
+          {user?.name}
         </h2>
 
-        <p className="mb-3">
+        <p className="mb-4">
           Email:
           {" "}
           {user?.email}
@@ -40,7 +38,6 @@ function Dashboard() {
     </div>
 
   );
-
 }
 
-export default Dashboard;
+export default Profile;

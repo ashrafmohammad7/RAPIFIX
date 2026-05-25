@@ -114,7 +114,7 @@ function MyBookings() {
 
             <div
               key={booking._id}
-              className="bg-gray-900 p-6 rounded-xl hover:scale-105 transition"
+              className="bg-gray-900 p-6 rounded-xl hover:scale-105 transition duration-300"
             >
 
               <h2 className="text-2xl mb-4">
@@ -139,7 +139,14 @@ function MyBookings() {
                 {
                   new Date(
                     booking.date
-                  ).toLocaleDateString()
+                  ).toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    }
+                  )
                 }
               </p>
 

@@ -1,54 +1,80 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
-import { registerUser } from "../api/authApi";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import toast from "react-hot-toast";
+
+import {
+  registerUser,
+} from "../api/authApi";
 
 function Signup() {
 
-  const navigate = useNavigate();
+  const navigate =
+    useNavigate();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
+  const [formData, setFormData] =
+    useState({
+
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+
+    });
 
   const handleChange = (e) => {
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
 
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =
+    async (e) => {
 
-    e.preventDefault();
+      e.preventDefault();
 
-    try {
+      try {
 
-      const data = await registerUser(formData);
+        const data =
+          await registerUser(
+            formData
+          );
 
-      alert(data.message);
+        toast.success(
+          data.message
+        );
 
-      navigate("/login");
+        navigate("/login");
 
-    } catch (error) {
+      } catch (error) {
 
-      alert(error.response.data.message);
+        toast.error(
 
-    }
+          error.response?.data?.message ||
+
+          "Signup Failed"
+
+        );
+
+      }
 
   };
 
   return (
+
     <div className="bg-black min-h-screen flex justify-center items-center">
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-10 rounded-xl w-[400px]"
+        className="bg-gray-900 p-10 rounded-xl w-[400px] hover:scale-105 transition"
       >
 
         <h1 className="text-3xl font-bold text-white mb-6 text-center">
@@ -60,7 +86,8 @@ function Signup() {
           name="name"
           placeholder="Full Name"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
@@ -68,7 +95,8 @@ function Signup() {
           name="email"
           placeholder="Email"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
@@ -76,7 +104,8 @@ function Signup() {
           name="phone"
           placeholder="Phone Number"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
         <input
@@ -84,10 +113,13 @@ function Signup() {
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          className="w-full mb-4 p-3 rounded bg-gray-800 text-white"
+          required
+          className="w-full mb-4 p-3 rounded bg-gray-800 text-white outline-none"
         />
 
-        <button className="w-full bg-blue-600 p-3 rounded text-white hover:bg-blue-700">
+        <button
+          className="w-full bg-blue-600 p-3 rounded text-white hover:bg-blue-700 transition"
+        >
           Signup
         </button>
 
@@ -107,6 +139,7 @@ function Signup() {
       </form>
 
     </div>
+
   );
 }
 
