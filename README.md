@@ -1,6 +1,6 @@
 # RAPIFIX 🚀
 
-RAPIFIX is a MERN-stack doorstep appliance repair platform.
+RAPIFIX is a modern MERN-stack doorstep appliance repair platform.
 
 Users can:
 - Register/Login
@@ -19,13 +19,19 @@ Admins can:
 # Features
 
 ✅ User Authentication  
-✅ Protected Routes  
+✅ JWT Protected Routes  
 ✅ Appliance Booking System  
 ✅ My Bookings Page  
 ✅ Admin Dashboard  
 ✅ Booking Status Updates  
 ✅ Expired Booking Logic  
+✅ Profile Management  
 ✅ Responsive UI  
+✅ Professional Landing Page  
+✅ Services Showcase  
+✅ Testimonials Section  
+✅ Statistics Section  
+✅ Hover Animations  
 ✅ Modern Startup UI  
 
 ---
@@ -93,8 +99,9 @@ PORT=5000
 ✅ Day 1 — Authentication System  
 ✅ Day 2 — Booking System  
 ✅ Day 3 — Protected Routes & Navbar  
-✅ Day 4 — Admin Dashboard & Booking Status 
-✅ Day 5 — UI Polish & Profile System
+✅ Day 4 — Admin Dashboard & Booking Status  
+✅ Day 5 — UI Polish & Profile System  
+✅ Day 6 — Landing Page & Startup UI  
 
 RAPIFIX MVP is actively under development 🚀
 
@@ -102,12 +109,15 @@ RAPIFIX MVP is actively under development 🚀
 
 # Future Improvements
 
+- Toast Notifications
+- Loading Spinners
 - Payment Gateway
 - Email Notifications
 - Technician Assignment
 - Ratings & Reviews
 - Live Tracking
 - Deployment
+- Admin Analytics
 
 ---
 
